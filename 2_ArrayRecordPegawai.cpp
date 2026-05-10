@@ -93,7 +93,7 @@ void tampil(Data arr, int n){
         cout << "Array masih kosong\n";
         return;
     }
-    cout << setw(38) << "DATA GAJI PEGAWAI PT INFORMATIKA\n";
+    cout << setw(38) << "DATA GAJI PEGAWAI PT INFORMATIKA" << "\n";
     cout << left;
     cout << "-----------------------------------------------------------------------------\n";
     cout << setw(4) << "No" 

@@ -104,7 +104,7 @@ void cetakList(List list){
         return;
     }
     Pointer jalan = list;
-    cout << setw(38) << "DATA GAJI PEGAWAI PT INFORMATIKA\n";
+    cout << setw(38) << "DATA GAJI PEGAWAI PT INFORMATIKA" << "\n";
     cout << left;
     cout << "-----------------------------------------------------------------------------\n";
     cout << setw(4) << "No" 
