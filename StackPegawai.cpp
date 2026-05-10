@@ -3,9 +3,9 @@
     NPM             : 140810250038
     Tanggal buat    : 28 April 2026
     Deskripsi       : Sebuah program untuk melakukan modifikasi pada
-                      sebuah doubly Circular List berisikan data pegawai
-                      pada PT INFORMATIKA dengan menu fungsi berupa
-                      insert after dan hapus.
+                      sebuah List dengan konsep Stack berisikan data 
+                      pegawai pada PT INFORMATIKA dengan menu fungsi 
+                      berupa Push, Pop dan Cetak Data.
 ******************************************************/
 
 #include <iostream>
@@ -69,23 +69,6 @@ void Pop(List& list, Pointer& tail, Pointer& hasil){
         tail = prec;
     }
 }
-void linearSearch(List list, int key, Pointer& cari, bool& found){
-    found = false;
-    if (list == nullptr){
-        cout << "List Kosong";
-        return;
-    }
-    Pointer jalan = list;
-    do {
-        if (jalan -> info.NIP == key){
-            found = true;
-            cari = jalan;
-            break;
-        } else {
-            jalan = jalan -> next;
-        }
-    } while (!found && jalan != list);
-}
 void cetakList(List list){
     if (list == nullptr){
         cout << "List kosong\n";
@@ -136,8 +119,7 @@ void display(){
          << "1. Push Stack\n"
          << "2. Pop Stack\n"
          << "3. Tampilkan Data\n"
-         << "4. Search\n"
-         << "5. Keluar\n"
+         << "4. Keluar\n"
          << "-------------------\n"
          << "Pilihan : ";
 }
@@ -156,50 +138,14 @@ void menu(List& list){
         case 2 : {
             Pointer hasil;
             Pop(list, tail, hasil);
+            delete hasil;
             break;
         }
         case 3 : {
             cetakList(list);
             break;
         }
-        case 4 : {
-            if (list == nullptr){
-                cout << "List kosong\n";
-                break;
-            }
-            int index = 0, key;
-            bool found = false;
-            Pointer cari;
-            cout << "Input NIP yang akan dicari : ";
-            cin >> key;
-            linearSearch(list, key, cari, found);
-            if (found){
-                cout << left << "-----------------------------------------------------------------------------\n";
-                cout << setw(4) << "No" 
-                     << setw(8) << "NIP" 
-                     << setw(20) << "Nama" 
-                     << setw(4) << "gol"
-                     << setw(14) << "Gaji"
-                     << setw(14) << "Tunjangan"
-                     << setw(16) << "Total" << "\n";
-                cout << "-----------------------------------------------------------------------------\n";
-                int gaji[3] = {3000000, 4000000, 5000000};
-                float tunjangan[3] = {1, 1.25, 1.5};
-                cout << left << setw(4) << 1 
-                     << setw(8) << cari -> info.NIP
-                     << setw(20) << cari -> info.nama
-                     << setw(4) << cari -> info.gol
-                     << setw(14) << gaji[cari -> info.gol - 1];
-                int tunjanganPegawai = gaji[cari -> info.gol - 1] * tunjangan[cari -> info.gol - 1];
-                cout << left << setw(14) << tunjanganPegawai;
-                cout << left << setw(16) << gaji[cari -> info.gol - 1] + tunjanganPegawai << "\n";
-                cout << "-----------------------------------------------------------------------------\n";
-            } else {
-                cout << "Data tidak ditemukan\n";
-            }
-            break;
-        }
-        case 5 :
+        case 4 :
             cout << "Program selesai.\nTerima kasih telah menggunakan program ini\n";
             break;
         default:
@@ -208,5 +154,5 @@ void menu(List& list){
             cin.ignore(4000000, '\n');
             break;
         }
-    } while (pilih != 5);
+    } while (pilih != 4);
 }
