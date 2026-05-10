@@ -29,7 +29,7 @@ Pegawai createElement(){
     Pegawai baru;
     cout << "NIP : "; cin >> baru.NIP;
     cout << "Nama : "; cin >> baru.nama;
-    cout << "Golongan : "; cin >> baru.gol;
+    cout << "Golongan (1/2/3) : "; cin >> baru.gol;
 
     return baru;
 }

@@ -38,7 +38,7 @@ Pointer createElement(){
     Pointer baru = new Node;
     cout << "NIP : "; cin >> baru->info.NIP;
     cout << "Nama : "; cin >> baru->info.nama;
-    cout << "Golongan : "; cin >> baru->info.gol;
+    cout << "Golongan (1/2/3) : "; cin >> baru->info.gol;
     baru->next = nullptr;
     
     return baru;
