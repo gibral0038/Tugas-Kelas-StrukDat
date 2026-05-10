@@ -63,8 +63,10 @@ void createStack(List& list){
 }
 Pointer createElement(){
     Pointer baru = new Node;
-    cout << "NIP : "; baru->info.NIP = validInputInteger(1);
-    cout << "Nama : "; cin >> baru->info.nama;
+    cout << "NIP : "; baru->info.NIP = validInputInteger(1); 
+    cout << "Nama : "; 
+    cin.ignore(); 
+    getline(cin, baru->info.nama);
     cout << "Golongan (1/2/3) : "; baru->info.gol = validInputInteger(2);
     baru->next = nullptr;
     

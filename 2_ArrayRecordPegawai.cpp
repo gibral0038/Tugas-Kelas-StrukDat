@@ -54,19 +54,20 @@ int validInputInteger(int jenis){
 }
 Pegawai createElement(){
     Pegawai baru;
-    cout << "NIP : "; baru.NIP = validInputInteger(1);
-    cout << "Nama : "; cin >> baru.nama;
+    cout << "NIP : "; baru.NIP = validInputInteger(1); 
+    cout << "Nama : "; 
+    cin.ignore(); 
+    getline(cin,baru.nama);
     cout << "Golongan (1/2/3) : "; baru.gol = validInputInteger(2);
 
     return baru;
 }
 void insert(Data arr, int& n){
-    n++;
     if (n >= 100){
         cout << "Array Penuh\n";
-        n--;
         return;
     }
+    n++;
     if (n == 1){
         arr[0] = createElement();
         return;
