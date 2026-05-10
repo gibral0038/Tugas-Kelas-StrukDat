@@ -1,7 +1,7 @@
-/*  Nama program    : UTS_ArrayPegawai
+/*  Nama program    : ArrayRecordPegawai
     Nama            : Gibraldi Zilal Fachry
     NPM             : 140810250038
-    Tanggal buat    : 27 April 2026
+    Tanggal buat    : 09 Mei 2026
     Deskripsi       : Sebuah program untuk melakukan modifikasi pada
                       sebuah array of record yang berisikan data pegawai
                       pada PT INFORMATIKA dengan menu fungsi berupa

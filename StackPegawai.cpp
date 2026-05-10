@@ -1,7 +1,7 @@
 /*  Nama program    : StackPegawai
     Nama            : Gibraldi Zilal Fachry
     NPM             : 140810250038
-    Tanggal buat    : 28 April 2026
+    Tanggal buat    : 09 Mei 2026
     Deskripsi       : Sebuah program untuk melakukan modifikasi pada
                       sebuah List dengan konsep Stack berisikan data 
                       pegawai pada PT INFORMATIKA dengan menu fungsi 
