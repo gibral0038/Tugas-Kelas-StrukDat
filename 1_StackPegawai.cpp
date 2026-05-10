@@ -95,6 +95,7 @@ void Pop(List& list, Pointer& tail, Pointer& hasil){
         }
         hasil = tail;
         tail = prec;
+        tail -> next = nullptr;
     }
 }
 void cetakList(List list){
