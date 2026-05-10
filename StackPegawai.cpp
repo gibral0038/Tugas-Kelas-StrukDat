@@ -1,4 +1,4 @@
-/*  Nama program    : StackPegawai
+/*  Nama program    : 1_StackPegawai
     Nama            : Gibraldi Zilal Fachry
     NPM             : 140810250038
     Tanggal buat    : 09 Mei 2026

@@ -1,4 +1,4 @@
-/*  Nama program    : ArrayRecordPegawai
+/*  Nama program    : 2_ArrayRecordPegawai
     Nama            : Gibraldi Zilal Fachry
     NPM             : 140810250038
     Tanggal buat    : 09 Mei 2026
