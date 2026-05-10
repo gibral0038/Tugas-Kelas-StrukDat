@@ -56,6 +56,7 @@ void Push(List& list, Pointer& tail){
 void Pop(List& list, Pointer& tail, Pointer& hasil){
     if (list == nullptr){
         cout << "List Kosong\n";
+        hasil = nullptr;
     } else if (list == tail){
         hasil = list;
         list = nullptr;
@@ -96,7 +97,7 @@ void cetakList(List list){
              << setw(20) << jalan -> info.nama
              << setw(4) << jalan -> info.gol
              << setw(14) << gaji[jalan -> info.gol - 1];
-        int tunjanganPegawai = gaji[jalan -> info.gol - 1] * tunjangan[jalan -> info.gol - 1];
+        long int tunjanganPegawai = gaji[jalan -> info.gol - 1] * tunjangan[jalan -> info.gol - 1];
         cout << left << setw(14) << tunjanganPegawai;
         total = gaji[jalan -> info.gol - 1] + tunjanganPegawai;
         totalGaji += gaji[jalan -> info.gol - 1];
@@ -105,7 +106,7 @@ void cetakList(List list){
         cout << left << setw(16) << total << "\n";
         count++;
         jalan = jalan -> next;
-    } while (jalan != list);
+    } while (jalan != nullptr);
     cout << "-----------------------------------------------------------------------------\n";
     cout << left << setw(36) << "Jumlah : " 
          << setw(14) << totalGaji 
