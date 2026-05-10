@@ -31,14 +31,41 @@ int main(){
     createStack(list);
     menu(list);
 }
+int validInputInteger(int jenis){
+    int n;
+    if (jenis == 1){
+        do{
+            std::cin >> n;
+            if (std::cin.fail()){
+                std::cout << "Input Tidak Valid\nUlangi : ";
+                std::cin.clear();
+                std::cin.ignore(1000000, '\n');
+            } else {
+                return n;
+            }
+        } while (true); 
+    } else {
+        do{
+            std::cin >> n;
+            if (std::cin.fail() || n < 1 || n > 3){
+                std::cout << "Input Tidak Valid\nUlangi (1/2/3): ";
+                std::cin.clear();
+                std::cin.ignore(1000000, '\n');
+            } else {
+                return n;
+            }
+        } while (true);
+        return 0; 
+    }
+}
 void createStack(List& list){
     list = nullptr;
 }
 Pointer createElement(){
     Pointer baru = new Node;
-    cout << "NIP : "; cin >> baru->info.NIP;
+    cout << "NIP : "; baru->info.NIP = validInputInteger(1);
     cout << "Nama : "; cin >> baru->info.nama;
-    cout << "Golongan (1/2/3) : "; cin >> baru->info.gol;
+    cout << "Golongan (1/2/3) : "; baru->info.gol = validInputInteger(2);
     baru->next = nullptr;
     
     return baru;

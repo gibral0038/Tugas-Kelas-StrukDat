@@ -25,11 +25,38 @@ int main(){
     Data arr;
     menu(arr, n);
 }
+int validInputInteger(int jenis){
+    int n;
+    if (jenis == 1){
+        do{
+            std::cin >> n;
+            if (std::cin.fail()){
+                std::cout << "Input Tidak Valid\nUlangi : ";
+                std::cin.clear();
+                std::cin.ignore(1000000, '\n');
+            } else {
+                return n;
+            }
+        } while (true); 
+    } else {
+        do{
+            std::cin >> n;
+            if (std::cin.fail() || n < 1 || n > 3){
+                std::cout << "Input Tidak Valid\nUlangi (1/2/3): ";
+                std::cin.clear();
+                std::cin.ignore(1000000, '\n');
+            } else {
+                return n;
+            }
+        } while (true);
+        return 0; 
+    }
+}
 Pegawai createElement(){
     Pegawai baru;
-    cout << "NIP : "; cin >> baru.NIP;
+    cout << "NIP : "; baru.NIP = validInputInteger(1);
     cout << "Nama : "; cin >> baru.nama;
-    cout << "Golongan (1/2/3) : "; cin >> baru.gol;
+    cout << "Golongan (1/2/3) : "; baru.gol = validInputInteger(2);
 
     return baru;
 }
