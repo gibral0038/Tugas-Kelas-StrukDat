@@ -1,6 +1,7 @@
 /*  Nama program    : 2_ArrayRecordPegawai
-    Nama            : Gibraldi Zilal Fachry
-    NPM             : 140810250038
+    Nama            : - Gibraldi Zilal Fachry (250038)
+                      - Muhammad Yunus Habiby (250014)
+                      - Azrel Sakhi Reswara   (250098)
     Tanggal buat    : 09 Mei 2026
     Deskripsi       : Sebuah program untuk melakukan modifikasi pada
                       sebuah array of record yang berisikan data pegawai
@@ -27,30 +28,31 @@ int main(){
 }
 int validInputInteger(int jenis){
     int n;
+    bool valid;
     if (jenis == 1){
         do{
+            valid = true;
             std::cin >> n;
             if (std::cin.fail()){
                 std::cout << "Input Tidak Valid\nUlangi : ";
                 std::cin.clear();
                 std::cin.ignore(1000000, '\n');
-            } else {
-                return n;
+                valid = false;
             }
-        } while (true); 
+        } while (!valid); 
     } else {
         do{
+            valid = true;
             std::cin >> n;
             if (std::cin.fail() || n < 1 || n > 3){
                 std::cout << "Input Tidak Valid\nUlangi (1/2/3): ";
                 std::cin.clear();
                 std::cin.ignore(1000000, '\n');
-            } else {
-                return n;
+                valid = false;
             }
-        } while (true);
-        return 0; 
+        } while (!valid); 
     }
+    return n;
 }
 Pegawai createElement(){
     Pegawai baru;
