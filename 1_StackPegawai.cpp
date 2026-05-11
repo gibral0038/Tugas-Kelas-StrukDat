@@ -127,7 +127,7 @@ long double total(const int& gol){
 }
 void cetakStack(Stack list){
     if (list == nullptr){
-        cout << "List kosong\n";
+        cout << "Stack kosong\n";
         return;
     }
     int count = 0;
