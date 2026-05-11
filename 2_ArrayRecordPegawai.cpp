@@ -65,29 +65,28 @@ Pegawai createElement(){
 void insert(Data arr, int& n){
     if (n >= 100){
         cout << "Array Penuh\n";
-        return;
+    } else {
+        n++;
+        if (n == 1){
+            arr[0] = createElement();
+        } else {
+            for (int i = n - 1; i > 0; i--){
+                arr[i] = arr[i - 1];
+            }
+            arr[0] = createElement();
+        }
     }
-    n++;
-    if (n == 1){
-        arr[0] = createElement();
-        return;
-    }
-    for (int i = n - 1; i > 0; i--){
-        arr[i] = arr[i - 1];
-    }
-    arr[0] = createElement();
 }
 void Out(Data arr, int& n, Pegawai& hasil){
     if (n == 0){
         cout << "Array Kosong\n";
-        return;
     } else {
         hasil = arr[0];
         for (int i = 0; i < n - 1; i++){
             arr[i] = arr[i + 1];
         }
+        n--;
     }
-    n--;
 }
 long int gaji(const int& gol){
     long int hasil;
@@ -117,40 +116,41 @@ void tampil(Data arr, int n){
     if (n <= 0){
         cout << "Array Kosong\n";
         return;
+    } else {
+        cout << setw(38) << "DATA GAJI PEGAWAI PT INFORMATIKA" << "\n";
+        cout << left;
+        cout << "-----------------------------------------------------------------------------\n";
+        cout << setw(4) << "No" 
+            << setw(8) << "NIP" 
+            << setw(20) << "Nama" 
+            << setw(4) << "gol"
+            << setw(14) << "Gaji"
+            << setw(14) << "Tunjangan"
+            << setw(16) << "Total" << "\n";
+        cout << "-----------------------------------------------------------------------------\n";
+        long int totalGaji = 0; 
+        long int totalTunjangan = 0;
+        long int totalKeseluruhan = 0;
+        for(int i = 0; i < n; i++){
+            cout << setw(4) << i+1 
+                << setw(8) << arr[i].NIP
+                << setw(20) << arr[i].nama
+                << setw(4) << arr[i].gol
+                << setw(14) << gaji(arr[i].gol)
+                << setw(14) << tunjangan(arr[i].gol)
+                << setw(16) << total(arr[i].gol) << "\n";
+            totalGaji += gaji(arr[i].gol);
+            totalTunjangan += tunjangan(arr[i].gol);
+            totalKeseluruhan += total(arr[i].gol);
+        }
+        cout << "-----------------------------------------------------------------------------\n";
+        cout << left << setw(36) << "Jumlah : " 
+            << setw(14) << totalGaji 
+            << setw(14) << totalTunjangan
+            << setw(16) << totalKeseluruhan;
+        cout << "\n-----------------------------------------------------------------------------\n";
+        cout << "Rata rata total gaji : " << totalKeseluruhan / n << "\n";
     }
-    cout << setw(38) << "DATA GAJI PEGAWAI PT INFORMATIKA" << "\n";
-    cout << left;
-    cout << "-----------------------------------------------------------------------------\n";
-    cout << setw(4) << "No" 
-         << setw(8) << "NIP" 
-         << setw(20) << "Nama" 
-         << setw(4) << "gol"
-         << setw(14) << "Gaji"
-         << setw(14) << "Tunjangan"
-         << setw(16) << "Total" << "\n";
-    cout << "-----------------------------------------------------------------------------\n";
-    long int totalGaji = 0; 
-    long int totalTunjangan = 0;
-    long int totalKeseluruhan = 0;
-    for(int i = 0; i < n; i++){
-        cout << setw(4) << i+1 
-             << setw(8) << arr[i].NIP
-             << setw(20) << arr[i].nama
-             << setw(4) << arr[i].gol
-             << setw(14) << gaji(arr[i].gol)
-             << setw(14) << tunjangan(arr[i].gol)
-             << setw(16) << total(arr[i].gol) << "\n";
-        totalGaji += gaji(arr[i].gol);
-        totalTunjangan += tunjangan(arr[i].gol);
-        totalKeseluruhan += total(arr[i].gol);
-    }
-    cout << "-----------------------------------------------------------------------------\n";
-    cout << left << setw(36) << "Jumlah : " 
-         << setw(14) << totalGaji 
-         << setw(14) << totalTunjangan
-         << setw(16) << totalKeseluruhan;
-    cout << "\n-----------------------------------------------------------------------------\n";
-    cout << "Rata rata total gaji : " << totalKeseluruhan / n << "\n";
 }
 void display(){
     cout << "-------------------\n"

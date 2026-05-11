@@ -128,45 +128,45 @@ long double total(const int& gol){
 void cetakStack(Stack list){
     if (list == nullptr){
         cout << "Stack kosong\n";
-        return;
+    } else {
+        int count = 0;
+        long int totalGaji = 0;
+        long int totalTunjangan = 0;
+        long int totalGabungan = 0;
+        Pointer jalan = list;
+        cout << setw(38) << "DATA GAJI PEGAWAI PT INFORMATIKA" << "\n";
+        cout << left;
+        cout << "-----------------------------------------------------------------------------\n";
+        cout << setw(4) << "No" 
+            << setw(8) << "NIP" 
+            << setw(20) << "Nama" 
+            << setw(4) << "gol"
+            << setw(14) << "Gaji"
+            << setw(14) << "Tunjangan"
+            << setw(16) << "Total" << "\n";
+        cout << "-----------------------------------------------------------------------------\n";
+        do {
+            count++;
+            cout << left << setw(4) << count
+                << setw(8) << jalan -> info.NIP
+                << setw(20) << jalan -> info.nama
+                << setw(4) << jalan -> info.gol
+                << setw(14) << gaji(jalan->info.gol)
+                << setw(14) << tunjangan(jalan->info.gol)
+                << setw(16) << total(jalan->info.gol) << "\n";
+            totalGaji += gaji(jalan->info.gol);
+            totalTunjangan += tunjangan(jalan->info.gol);
+            totalGabungan += total(jalan->info.gol);
+            jalan = jalan -> next;
+        } while (jalan != nullptr);
+        cout << "-----------------------------------------------------------------------------\n";
+        cout << left << setw(36) << "Jumlah : " 
+            << setw(14) << totalGaji
+            << setw(14) << totalTunjangan
+            << setw(16) << totalGabungan;
+        cout << "\n-----------------------------------------------------------------------------\n";
+        cout << "Rata rata total gaji : " << totalGabungan / count << endl;
     }
-    int count = 0;
-    long int totalGaji = 0;
-    long int totalTunjangan = 0;
-    long int totalGabungan = 0;
-    Pointer jalan = list;
-    cout << setw(38) << "DATA GAJI PEGAWAI PT INFORMATIKA" << "\n";
-    cout << left;
-    cout << "-----------------------------------------------------------------------------\n";
-    cout << setw(4) << "No" 
-         << setw(8) << "NIP" 
-         << setw(20) << "Nama" 
-         << setw(4) << "gol"
-         << setw(14) << "Gaji"
-         << setw(14) << "Tunjangan"
-         << setw(16) << "Total" << "\n";
-    cout << "-----------------------------------------------------------------------------\n";
-    do {
-        count++;
-        cout << left << setw(4) << count
-             << setw(8) << jalan -> info.NIP
-             << setw(20) << jalan -> info.nama
-             << setw(4) << jalan -> info.gol
-             << setw(14) << gaji(jalan->info.gol)
-             << setw(14) << tunjangan(jalan->info.gol)
-             << setw(16) << total(jalan->info.gol) << "\n";
-        totalGaji += gaji(jalan->info.gol);
-        totalTunjangan += tunjangan(jalan->info.gol);
-        totalGabungan += total(jalan->info.gol);
-        jalan = jalan -> next;
-    } while (jalan != nullptr);
-    cout << "-----------------------------------------------------------------------------\n";
-    cout << left << setw(36) << "Jumlah : " 
-         << setw(14) << totalGaji
-         << setw(14) << totalTunjangan
-         << setw(16) << totalGabungan;
-    cout << "\n-----------------------------------------------------------------------------\n";
-    cout << "Rata rata total gaji : " << totalGabungan / count << endl;
 }
 void display(){
     cout << "-------------------\n"
