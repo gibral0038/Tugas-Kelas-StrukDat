@@ -24,12 +24,13 @@ struct Node{
 };
 typedef Node* Pointer;
 typedef Pointer List;
-void createStack(List& list);
-void menu(List& list);
+typedef Pointer Stack;
+void createStack(Stack& StackPegawai);
+void menu(Stack& StackPegawai);
 int main(){
-    List list;
-    createStack(list);
-    menu(list);
+    List StackPegawai;
+    createStack(StackPegawai);
+    menu(StackPegawai);
 }
 int validInputInteger(int jenis){
     int n;
@@ -58,8 +59,8 @@ int validInputInteger(int jenis){
         return 0; 
     }
 }
-void createStack(List& list){
-    list = nullptr;
+void createStack(Stack& top){
+    top = nullptr;
 }
 Pointer createElement(){
     Pointer baru = new Node;
@@ -72,26 +73,26 @@ Pointer createElement(){
     
     return baru;
 }
-void Push(List& list, Pointer& tail){
+void Push(Stack& top, Pointer& tail){
     Pointer baru = createElement();
-    if (list == nullptr){
-        list = baru;
+    if (top == nullptr){
+        top = baru;
         tail = baru;
     } else {
         tail->next = baru;
         tail = baru;
     }
 }
-void Pop(List& list, Pointer& tail, Pointer& hasil){
-    if (list == nullptr){
-        cout << "List Kosong\n";
+void Pop(Stack& top, Pointer& tail, Pointer& hasil){
+    if (top == nullptr){
+        cout << "Stack Kosong\n";
         hasil = nullptr;
-    } else if (list == tail){
-        hasil = list;
-        list = nullptr;
+    } else if (top == tail){
+        hasil = top;
+        top = nullptr;
         tail = nullptr;
     } else {
-        Pointer prec = list;
+        Pointer prec = top;
         while (prec->next != tail){
             prec = prec->next;
         }
@@ -100,11 +101,39 @@ void Pop(List& list, Pointer& tail, Pointer& hasil){
         tail -> next = nullptr;
     }
 }
-void cetakList(List list){
+long int gaji(const int& gol){
+    long int hasil;
+    if (gol == 1) hasil = 3000000;
+    else if (gol == 2) hasil = 4000000;
+    else if (gol == 3) hasil = 5000000;
+    else hasil = 0;
+    return hasil;
+}
+long double tunjangan(const int& gol){
+    long double hasil;
+    if (gol == 1) hasil = gaji(gol) * 1;
+    else if (gol == 2) hasil = gaji(gol) * 1.25;
+    else if (gol == 3) hasil = gaji(gol) * 1.5;
+    else hasil = 0;
+    return hasil;
+}
+long double total(const int& gol){
+    long double hasil;
+    if (gol == 1) hasil = gaji(gol) * 2;
+    else if (gol == 2) hasil = gaji(gol) * 2.25;
+    else if (gol == 3) hasil = gaji(gol) * 2.5;
+    else hasil = 0;
+    return hasil;
+}
+void cetakStack(Stack list){
     if (list == nullptr){
         cout << "List kosong\n";
         return;
     }
+    int count = 0;
+    long int totalGaji = 0;
+    long int totalTunjangan = 0;
+    long int totalGabungan = 0;
     Pointer jalan = list;
     cout << setw(38) << "DATA GAJI PEGAWAI PT INFORMATIKA" << "\n";
     cout << left;
@@ -117,33 +146,27 @@ void cetakList(List list){
          << setw(14) << "Tunjangan"
          << setw(16) << "Total" << "\n";
     cout << "-----------------------------------------------------------------------------\n";
-    int gaji[3] = {3000000, 4000000, 5000000};
-    float tunjangan[3] = {1, 1.25, 1.5};
-    int totalGaji = 0, totalTunjangan = 0, totalKeseluruhan = 0, count = 0;
     do {
-        int total;
-        cout << left << setw(4) << count + 1 
+        count++;
+        cout << left << setw(4) << count
              << setw(8) << jalan -> info.NIP
              << setw(20) << jalan -> info.nama
              << setw(4) << jalan -> info.gol
-             << setw(14) << gaji[jalan -> info.gol - 1];
-        long int tunjanganPegawai = gaji[jalan -> info.gol - 1] * tunjangan[jalan -> info.gol - 1];
-        cout << left << setw(14) << tunjanganPegawai;
-        total = gaji[jalan -> info.gol - 1] + tunjanganPegawai;
-        totalGaji += gaji[jalan -> info.gol - 1];
-        totalTunjangan += tunjanganPegawai;
-        totalKeseluruhan += total;
-        cout << left << setw(16) << total << "\n";
-        count++;
+             << setw(14) << gaji(jalan->info.gol)
+             << setw(14) << tunjangan(jalan->info.gol)
+             << setw(16) << total(jalan->info.gol) << "\n";
+        totalGaji += gaji(jalan->info.gol);
+        totalTunjangan += tunjangan(jalan->info.gol);
+        totalGabungan += total(jalan->info.gol);
         jalan = jalan -> next;
     } while (jalan != nullptr);
     cout << "-----------------------------------------------------------------------------\n";
     cout << left << setw(36) << "Jumlah : " 
-         << setw(14) << totalGaji 
+         << setw(14) << totalGaji
          << setw(14) << totalTunjangan
-         << setw(16) << totalKeseluruhan;
+         << setw(16) << totalGabungan;
     cout << "\n-----------------------------------------------------------------------------\n";
-    cout << "Rata rata total gaji : " << totalKeseluruhan / count << endl;
+    cout << "Rata rata total gaji : " << totalGabungan / count << endl;
 }
 void display(){
     cout << "-------------------\n"
@@ -154,26 +177,26 @@ void display(){
          << "-------------------\n"
          << "Pilihan : ";
 }
-void menu(List& list){
+void menu(Stack& StackPegawai){
     int pilih;
-    Pointer tail = nullptr;
+    Pointer last = nullptr;
     do {
         display();
         cin >> pilih;
         switch (pilih)
         {
         case 1 : {
-            Push(list, tail);
+            Push(StackPegawai, last);
             break;
         }
         case 2 : {
             Pointer hasil;
-            Pop(list, tail, hasil);
+            Pop(StackPegawai, last, hasil);
             delete hasil;
             break;
         }
         case 3 : {
-            cetakList(list);
+            cetakStack(StackPegawai);
             break;
         }
         case 4 :
