@@ -1,7 +1,8 @@
 /*  Nama program    : 2_ArrayRecordPegawai
-    Nama            : - Gibraldi Zilal Fachry (250038)
-                      - Muhammad Yunus Habiby (250014)
-                      - Azrel Sakhi Reswara   (250098)
+    Nama            : - Renadi Wilantara (140810240061)
+                      - Muhammad Yunus Habiby (140810250014)
+                      - Gibraldi Zilal Fachry (140810250038)
+                      - Azrel Sakhi Reswara   (140810250098)
     Tanggal buat    : 09 Mei 2026
     Deskripsi       : Sebuah program untuk melakukan modifikasi pada
                       sebuah array of record yang berisikan data pegawai
