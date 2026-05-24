@@ -1,8 +1,9 @@
-/*  Nama      : Renadi Wilantara
-    NPM       : 140810240061
-    Tanggal   : 18 Mei 2026
-    Deskripsi : Queue Circular Array Pegawai 
-*/
+/*  Nama program    : QueueArrayCircularPegawai
+    Nama Anggota    : Renadi Wilantara, Gibraldi Zilal Fachry, Muhammad Yunus Habiby, Azrel Sakhi Reswara
+    NPM             : 140810240061, 140810250038, 140810250014, 140810250098
+    Tanggal buat    : 24 Mei 2026
+    Deskripsi       : Queue Array Circular Pegawai
+******************************************************/
 
 #include <iostream>
 #include <iomanip>
@@ -300,7 +301,6 @@ int main() {
             default:
                 cout << "\nPilihan tidak valid!" << endl;
         }
-
     } while (pilihan != 0);
 
     return 0;

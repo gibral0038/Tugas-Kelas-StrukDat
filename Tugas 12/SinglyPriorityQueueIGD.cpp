@@ -1,13 +1,14 @@
 /*  Nama program    : SinglyPriorityQueueIGD
     Nama Anggota    : Renadi Wilantara, Gibraldi Zilal Fachry, Muhammad Yunus Habiby, Azrel Sakhi Reswara
     NPM             : 140810240061, 140810250038, 140810250014, 140810250098
-    Tanggal buat    : 20 Mei 2026
+    Tanggal buat    : 24 Mei 2026
     Deskripsi       : Priority Queue Singly Linked List IGD 
 ******************************************************/
 
 #include <iostream>
 #include <iomanip>
 #include <string>
+
 using namespace std;
 
 struct Pasien {
