@@ -1,12 +1,12 @@
-/*  Nama      : Renadi Wilantara, Gibraldi Zilal Fachry, Muhammad Yunus Habiby, Azrel Sakhi Reswara  
-    NPM       : 140810240061, 140810250038, 140810250014, 140810250098
-    Tanggal   : 17 Mei 2026
-    Deskripsi : Queue Array Pegawai 
+/*  Nama      : Renadi Wilantara
+    NPM       : 140810240061
+    Tanggal   : 18 Mei 2026
+    Deskripsi : Queue Circular Array Pegawai 
 */
-
 
 #include <iostream>
 #include <iomanip>
+#include <string>
 
 using namespace std;
 
@@ -34,9 +34,8 @@ string formatRibuan(long long n) {
     return s;
 }
 
-
 void createQueue(QueueArray& Q) {
-    Q.head = 0;
+    Q.head = -1;
     Q.tail = -1;
 }
 
@@ -51,34 +50,53 @@ void inputPegawai (Pegawai& P) {
     } while (P.gol < 1 || P.gol > 3);
 }
 
-bool isFullArray(QueueArray& Q) {
-    return Q.tail == MAKS - 1;
-}
+void insertQueue(QueueArray& Q, Pegawai newElement, bool& berhasil) {
+    berhasil = false;
+    int posisiTemp;
 
-bool isEmptyArray(QueueArray& Q) {
-    return Q.head > Q.tail;
-}
-
-void insertQueue(QueueArray& Q, Pegawai newElement) {
-    if (isFullArray(Q)) {
-        cout << "Queue Sudah Penuh." << endl;
-    } else {
-        Q.tail++;
+    if (Q.tail == -1) {
+        Q.tail = 0;
+        Q.head = 0;
         Q.info[Q.tail] = newElement;
+        berhasil = true;
+    } 
+    else {
+        posisiTemp = Q.tail;
+        if (Q.tail < MAKS - 1) {
+            Q.tail++;
+        } 
+        else {
+            Q.tail = 0;
+        }
+        if (Q.tail == Q.head) {
+            cout << "\nAntrian Sudah Penuh." << endl;
+            Q.tail = posisiTemp;
+        }
+        else {
+            Q.info[Q.tail] = newElement;    
+            berhasil = true;
+        }
     }
 }
 
-void deleteQueue(QueueArray& Q, Pegawai& delElement) {
-    if (isEmptyArray(Q)) {
-        cout << "Queue Kosong." << endl;
-    } else {
+void deleteQueue(QueueArray& Q, Pegawai& delElement, bool& kosong) {
+    kosong = false;
+    if (Q.head == -1) {
+        kosong = true;
+    }
+    else if (Q.head == Q.tail) {
         delElement = Q.info[Q.head];
-        int i = 0;
-        while (i < Q.tail) {
-            Q.info[i] = Q.info[i+1];
-            i++;
+        Q.head = -1;
+        Q.tail = -1;
+    }
+    else {
+        delElement = Q.info[Q.head];
+        if (Q.head < MAKS - 1) {
+            Q.head++;
         }
-        Q.tail--;
+        else {
+            Q.head = 0;
+        }
     }
 }
 
@@ -116,56 +134,67 @@ long long hitungTotal(int gol) {
 
 long long hitungTotalGaji(QueueArray Q) {
     long long total = 0;
-    int idx = Q.head;
-    while (idx <= Q.tail) {
-        total += hitungGaji(Q.info[idx].gol);
-        idx++;
+    if (Q.head != -1) {
+        int idx = Q.head;
+        int total_elemen = (Q.tail - Q.head + MAKS) % MAKS + 1;
+        int count = 0;
+        while (count < total_elemen) {
+            total += hitungGaji(Q.info[idx].gol);
+            if (idx < MAKS - 1) idx++;
+            else idx = 0;
+            count++;
+        }
     }
     return total;
 }
 
 long long hitungTotalTunjangan(QueueArray Q) {
     long long total = 0;
-    int idx = Q.head;
-    while (idx <= Q.tail) {
-        total += hitungTunjangan(Q.info[idx].gol);
-        idx++;
+    if (Q.head != -1) {
+        int idx = Q.head;
+        int total_elemen = (Q.tail - Q.head + MAKS) % MAKS + 1;
+        int count = 0;
+        while (count < total_elemen) {
+            total += hitungTunjangan(Q.info[idx].gol);
+            if (idx < MAKS - 1) idx++;
+            else idx = 0;
+            count++;
+        }
     }
     return total;
 }
 
 long long hitungTotalKeseluruhan(QueueArray Q) {
     long long total = 0;
-    int idx = Q.head;
-    while (idx <= Q.tail) {
-        total += hitungTotal(Q.info[idx].gol);
-        idx++;
+    if (Q.head != -1) {
+        int idx = Q.head;
+        int total_elemen = (Q.tail - Q.head + MAKS) % MAKS + 1;
+        int count = 0;
+        while (count < total_elemen) {
+            total += hitungTotal(Q.info[idx].gol);
+            if (idx < MAKS - 1) idx++;
+            else idx = 0;
+            count++;
+        }
     }
     return total;
 }
 
 double hitungRataRata(QueueArray Q) {
     double rata = 0;
-    
-    if (!isEmptyArray(Q)) {
-        long long total = 0;
-        int idx = Q.head;
-        while (idx <= Q.tail) {
-            total += hitungTotal(Q.info[idx].gol);
-            idx++;
-        }
-        rata = (double)total / (Q.tail - Q.head + 1);
+    if (Q.head != -1) {
+        int total_elemen = (Q.tail - Q.head + MAKS) % MAKS + 1;
+        rata = (double)hitungTotalKeseluruhan(Q) / total_elemen;
     }
     return rata;
 }
 
 void traversal(QueueArray Q) {
-    if (isEmptyArray(Q)) {
+    if (Q.head == -1) {
         cout << "Queue kosong." << endl;
-        return;
     }
-
-    cout << "\n";
+    else {
+        cout << "\n";
     cout << string(80, '-') << endl;
     cout << setw(57) << "DAFTAR GAJI PEGAWAI PT. INFORMATIKA" << endl;
     cout << string(80, '-') << endl;
@@ -182,7 +211,10 @@ void traversal(QueueArray Q) {
 
     int idx = Q.head;
     int no  = 1;
-    while (idx <= Q.tail) {
+    int total_elemen = (Q.tail - Q.head + MAKS) % MAKS + 1;
+    int count = 0;
+
+    while (count < total_elemen) {
         cout << left
              << setw(4)  << (to_string(no++) + ".")
              << setw(10) << Q.info[idx].NIP
@@ -192,7 +224,11 @@ void traversal(QueueArray Q) {
              << setw(14) << formatRibuan(hitungTunjangan(Q.info[idx].gol))
              << setw(14) << formatRibuan(hitungTotal(Q.info[idx].gol))
              << endl;
-        idx++;
+        if (idx < MAKS - 1)
+            idx++;
+        else
+            idx = 0;
+        count++;
     }
 
     cout << string(80, '-') << endl;
@@ -204,13 +240,14 @@ void traversal(QueueArray Q) {
          << endl;
     cout << string(80, '-') << endl;
     cout << "Rata-rata Gaji Total : " << fixed << setprecision(0)
-         << formatRibuan(hitungRataRata(Q)) << endl;
+         << formatRibuan((long long)hitungRataRata(Q)) << endl;
     cout << string(80, '-') << endl;
+    }
 }
 
 void menu() {
     cout << "\n==========================================" << endl;
-    cout << "   MENU QUEUE PEGAWAI (Array)" << endl;
+    cout << "   MENU QUEUE PEGAWAI (Array Circular)" << endl;
     cout << "==========================================" << endl;
     cout << "  1. InsertQueue (Tambah Pegawai)" << endl;
     cout << "  2. DeleteQueue (Hapus Pegawai Terdepan)" << endl;
@@ -219,7 +256,6 @@ void menu() {
     cout << "------------------------------------------" << endl;
     cout << "  Pilihan: ";
 }
-
 
 int main() {
     QueueArray PegawaiInfor;
@@ -233,20 +269,28 @@ int main() {
         cin >> pilihan;
 
         switch (pilihan) {
-            case 1:
+            case 1: {
+                bool berhasil;
                 cout << "\n--- Input Pegawai Baru ---" << endl;
                 inputPegawai(newElement);
-                insertQueue(PegawaiInfor, newElement);
-                cout << "Pegawai berhasil di-insert." << endl;
-                break;
-            case 2:
-                if (isEmptyArray(PegawaiInfor)) {
-                    cout << "\nQueue kosong." << endl;
+                insertQueue(PegawaiInfor, newElement, berhasil);
+                if (berhasil) {
+                    cout << "Pegawai berhasil di-insert." << endl;
                 } else {
-                    deleteQueue(PegawaiInfor, delElement);
-                    cout << "\nPegawai \"" << delElement.nama << "\" berhasil di-delete." << endl;
+                    cout << "Gagal menginsert pegawai." << endl;
                 }
                 break;
+            }
+            case 2: {
+                bool kosong;
+                deleteQueue(PegawaiInfor, delElement, kosong);
+                if (!kosong) {
+                    cout << "\nPegawai \"" << delElement.nama << "\" berhasil di-delete." << endl;
+                } else {
+                    cout << "Queue kosong." << endl;
+                }
+                break;
+            }
             case 3:
                 traversal(PegawaiInfor);
                 break;
