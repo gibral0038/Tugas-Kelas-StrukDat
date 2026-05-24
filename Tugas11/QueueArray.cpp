@@ -167,7 +167,7 @@ void traversal(QueueArray Q) {
 
     cout << "\n";
     cout << string(80, '-') << endl;
-    cout << setw(45) << "DAFTAR GAJI PEGAWAI PT. INFORMATIKA" << endl;
+    cout << setw(57) << "DAFTAR GAJI PEGAWAI PT. INFORMATIKA" << endl;
     cout << string(80, '-') << endl;
     cout << left
          << setw(4)  << "No"

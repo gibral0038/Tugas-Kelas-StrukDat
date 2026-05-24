@@ -1,9 +1,8 @@
-/*  Nama program    : QueueArrayCircular
-    Nama Anggota    : Renadi Wilantara, Gibraldi Zilal Fachry, Muhammad Yunus Habiby, Azrel Sakhi Reswara
-    NPM             : 140810240061, 140810250038, 140810250014, 140810250098
-    Tanggal buat    : 18 Mei 2026
-    Deskripsi       : Queue Array Circular Pegawai
-******************************************************/
+/*  Nama      : Renadi Wilantara
+    NPM       : 140810240061
+    Tanggal   : 18 Mei 2026
+    Deskripsi : Queue Circular Array Pegawai 
+*/
 
 #include <iostream>
 #include <iomanip>
@@ -11,227 +10,258 @@
 
 using namespace std;
 
-struct Karyawan {
+const int MAKS = 255;
+
+struct Pegawai {
     string NIP;
     string nama;
-    Karyawan* next;
+    int gol;
 };
 
-struct Divisi {
-    string namaDivisi;
-    Karyawan* karyawan;
-    Divisi* next;
+struct QueueArray {
+    Pegawai info[MAKS];
+    int head;
+    int tail;
 };
 
-typedef Divisi* PointerDivisi;
-typedef Karyawan* PointerKaryawan;
-typedef PointerDivisi List;
-
-bool isEmptyDivisi(List Q) {
-    return Q == nullptr;
+string formatRibuan(long long n) {
+    string s = to_string(n);
+    int insert = s.length() - 3;
+    while (insert > 0) {
+        s.insert(insert, ".");
+        insert -= 3;
+    }
+    return s;
 }
 
-bool isEmptyKaryawan(PointerKaryawan Q) {
-    return Q == nullptr;
+void createQueue(QueueArray& Q) {
+    Q.head = -1;
+    Q.tail = -1;
 }
 
-void createList(List& Div) {
-    Div = nullptr;
+void inputPegawai (Pegawai& P) {
+    cout << "NIP        : "; cin >> P.NIP;
+    cout << "Nama       : "; cin.ignore(); getline(cin, P.nama);
+    do {
+        cout << "Golongan (1-3) : "; cin >> P.gol;
+        if (P.gol < 1 || P.gol > 3) {
+            cout << "Golongan tidak valid!" << endl;
+        }
+    } while (P.gol < 1 || P.gol > 3);
 }
 
-void createKaryawan(PointerKaryawan& pBaru) {
-    pBaru = new Karyawan;
-    cout << "NIP        : "; cin >> pBaru->NIP;
-    cout << "Nama       : "; cin.ignore(40000, '\n'); getline(cin, pBaru->nama);
-    pBaru->next = nullptr;
-}
+void insertQueue(QueueArray& Q, Pegawai newElement, bool& berhasil) {
+    berhasil = false;
+    int posisiTemp;
 
-void createDivisi(PointerDivisi& pBaru) {
-    pBaru = new Divisi;
-    cout << "Nama Divisi : "; cin.ignore(40000, '\n'); getline(cin, pBaru->namaDivisi);
-    pBaru->karyawan = nullptr;
-    pBaru->next = nullptr;
-}
-
-void linearSearchDivisi(List Q, string key, PointerDivisi& hasil, bool& found){
-    found = false;
-    if (isEmptyDivisi(Q)) {
-        hasil = nullptr;
-    } else {
-        hasil = nullptr;
-        PointerDivisi temp = Q;
-        while (!found && temp != nullptr) {
-            if (temp->namaDivisi == key) {
-                hasil = temp;
-                found = true;
-                break;
-            }
-            temp = temp->next;
+    if (Q.tail == -1) {
+        Q.tail = 0;
+        Q.head = 0;
+        Q.info[Q.tail] = newElement;
+        berhasil = true;
+    } 
+    else {
+        posisiTemp = Q.tail;
+        if (Q.tail < MAKS - 1) {
+            Q.tail++;
+        } 
+        else {
+            Q.tail = 0;
+        }
+        if (Q.tail == Q.head) {
+            cout << "\nAntrian Sudah Penuh." << endl;
+            Q.tail = posisiTemp;
+        }
+        else {
+            Q.info[Q.tail] = newElement;    
+            berhasil = true;
         }
     }
 }
 
-void insertFirstKaryawan(PointerDivisi& Div, PointerKaryawan pBaru){
-    if (isEmptyKaryawan(Div->karyawan)) {
-        Div->karyawan = pBaru;
-    } else {
-        pBaru->next = Div->karyawan;
-        Div->karyawan = pBaru;
+void deleteQueue(QueueArray& Q, Pegawai& delElement, bool& kosong) {
+    kosong = false;
+    if (Q.head == -1) {
+        kosong = true;
+    }
+    else if (Q.head == Q.tail) {
+        delElement = Q.info[Q.head];
+        Q.head = -1;
+        Q.tail = -1;
+    }
+    else {
+        delElement = Q.info[Q.head];
+        if (Q.head < MAKS - 1) {
+            Q.head++;
+        }
+        else {
+            Q.head = 0;
+        }
     }
 }
 
-void deleteFirstKaryawan(PointerDivisi& Div, PointerKaryawan& pHapus) {
-    if (isEmptyKaryawan(Div->karyawan)) {
-        cout << "Tidak Ada Karyawan." << endl;
-        pHapus = NULL;
-    } else if (Div->karyawan->next == nullptr) {
-        pHapus = Div->karyawan;
-        Div->karyawan = nullptr;
+long long hitungGaji(int gol) {
+    long long gaji = 0;
+
+    if (gol == 1) {
+        gaji = 3000000;
+    } else if (gol == 2) {
+        gaji = 4000000;
     } else {
-        pHapus = Div->karyawan;
-        Div->karyawan = Div->karyawan->next;
-        pHapus->next = nullptr;
+        gaji = 5000000;
     }
+
+    return gaji;
 }
 
-void insertFirstDivisi(List& First, PointerDivisi pBaru) {
-    if (isEmptyDivisi(First)) {
-        First = pBaru;
+long long hitungTunjangan(int gol) {
+    long long tunjangan = hitungGaji(gol);
+
+    if (gol == 1) {
+        tunjangan *= 1 ;
+    } else if (gol == 2) {
+        tunjangan *= 1.25 ;
     } else {
-        pBaru->next = First;
-        First = pBaru;
+        tunjangan *= 1.5;
     }
+
+    return tunjangan;
 }
 
-void deleteFirstDivisi(List& Div, PointerDivisi& pHapus) {
-    if (isEmptyDivisi(Div)) {
-        cout << "Tidak Ada Divisi." << endl;
-        pHapus = NULL;
-    } else if (Div->next == nullptr) {
-        pHapus = Div;
-        Div = nullptr;
-    } else {
-        pHapus = Div;
-        Div = Div->next;
-        pHapus->next = nullptr;
-    }
+long long hitungTotal(int gol) {
+    return hitungGaji(gol) + hitungTunjangan(gol);
 }
 
-void traversalSemua(List Div) {
-    if (Div == nullptr) {
+long long hitungTotalGaji(QueueArray Q) {
+    long long total = 0;
+    if (Q.head != -1) {
+        int idx = Q.head;
+        int total_elemen = (Q.tail - Q.head + MAKS) % MAKS + 1;
+        int count = 0;
+        while (count < total_elemen) {
+            total += hitungGaji(Q.info[idx].gol);
+            if (idx < MAKS - 1) idx++;
+            else idx = 0;
+            count++;
+        }
+    }
+    return total;
+}
+
+long long hitungTotalTunjangan(QueueArray Q) {
+    long long total = 0;
+    if (Q.head != -1) {
+        int idx = Q.head;
+        int total_elemen = (Q.tail - Q.head + MAKS) % MAKS + 1;
+        int count = 0;
+        while (count < total_elemen) {
+            total += hitungTunjangan(Q.info[idx].gol);
+            if (idx < MAKS - 1) idx++;
+            else idx = 0;
+            count++;
+        }
+    }
+    return total;
+}
+
+long long hitungTotalKeseluruhan(QueueArray Q) {
+    long long total = 0;
+    if (Q.head != -1) {
+        int idx = Q.head;
+        int total_elemen = (Q.tail - Q.head + MAKS) % MAKS + 1;
+        int count = 0;
+        while (count < total_elemen) {
+            total += hitungTotal(Q.info[idx].gol);
+            if (idx < MAKS - 1) idx++;
+            else idx = 0;
+            count++;
+        }
+    }
+    return total;
+}
+
+double hitungRataRata(QueueArray Q) {
+    double rata = 0;
+    if (Q.head != -1) {
+        int total_elemen = (Q.tail - Q.head + MAKS) % MAKS + 1;
+        rata = (double)hitungTotalKeseluruhan(Q) / total_elemen;
+    }
+    return rata;
+}
+
+void traversal(QueueArray Q) {
+    if (Q.head == -1) {
         cout << "Queue kosong." << endl;
-    } else {
-        cout << string(80, '-') << endl;
-        cout << setw(42) << " Daftar Divisi dan Karyawan PT KomputerKu Tbk " << endl;
-        cout << string(80, '-') << endl;
-        cout << left
-             << "| " << setw(4)  << "No"
-             << "| " << setw(20) << "Nama Divisi"
-             << "| " << setw(20) << "NIP"
-             << "| " << setw(30) << "Nama Karyawan"
-             << "|" << endl;
-        cout << string(80, '-') << endl;
-        int countDivisi = 0;
-        PointerDivisi tempDivisi = Div;
-        while (tempDivisi != nullptr) {
-            PointerKaryawan tempKaryawan = tempDivisi->karyawan;
-            cout << left
-                 << "| " << setw(4)  << countDivisi + 1
-                 << "| " << setw(20) << tempDivisi->namaDivisi;
-            if (tempKaryawan != nullptr) {
-                cout << "| " << setw(20) << tempKaryawan->NIP
-                     << "| " << setw(30) << tempKaryawan->nama
-                     << "|" << endl;
-                tempKaryawan = tempKaryawan->next;
-                while (tempKaryawan != nullptr) {
-                    cout << left
-                        << "| " << setw(4)  << ""
-                        << "| " << setw(20) << ""
-                        << "| " << setw(20) << tempKaryawan->NIP
-                        << "| " << setw(30) << tempKaryawan->nama
-                        << "|" << endl;
-                    tempKaryawan = tempKaryawan->next;
-                }
-            } else {
-                cout << "| " << setw(20) << ""
-                     << "| " << setw(30) << ""
-                     << "|" << endl;
-            }
-            tempDivisi = tempDivisi->next;
-            countDivisi++;
-        }
-        cout << string(80, '-') << endl;
     }
-}
+    else {
+        cout << "\n";
+    cout << string(80, '-') << endl;
+    cout << setw(57) << "DAFTAR GAJI PEGAWAI PT. INFORMATIKA" << endl;
+    cout << string(80, '-') << endl;
+    cout << left
+         << setw(4)  << "No"
+         << setw(10) << "NIP"
+         << setw(20) << "Nama"
+         << setw(5)  << "Gol"
+         << setw(14) << "Gaji"
+         << setw(14) << "Tunjangan"
+         << setw(14) << "Total"
+         << endl;
+    cout << string(80, '-') << endl;
 
-void traversalDivisi(PointerDivisi Div) {
-    if (Div == nullptr) {
-        cout << "Divisi kosong." << endl;
-    } else {
-        cout << string(80, '-') << endl;
-        cout << setw(42) << " Daftar Divisi dan Karyawan PT KomputerKu Tbk " << endl;
-        cout << string(80, '-') << endl;
+    int idx = Q.head;
+    int no  = 1;
+    int total_elemen = (Q.tail - Q.head + MAKS) % MAKS + 1;
+    int count = 0;
+
+    while (count < total_elemen) {
         cout << left
-             << "| " << setw(4)  << "No"
-             << "| " << setw(20) << "Nama Divisi"
-             << "| " << setw(20) << "NIP"
-             << "| " << setw(30) << "Nama Karyawan"
-             << "|" << endl;
-        cout << string(80, '-') << endl;
-        cout << left
-             << "| " << setw(4)  << "1."
-             << "| " << setw(20) << Div->namaDivisi;
-        PointerKaryawan tempKaryawan = Div->karyawan;
-        if (tempKaryawan != nullptr) {
-            cout << "| " << setw(20) << tempKaryawan->NIP
-                 << "| " << setw(30) << tempKaryawan->nama
-                 << "|" << endl;
-            tempKaryawan = tempKaryawan->next;
-            while (tempKaryawan != nullptr) {
-                cout << left
-                    << "| " << setw(4)  << ""
-                    << "| " << setw(20) << ""
-                    << "| " << setw(20) << tempKaryawan->NIP
-                    << "| " << setw(30) << tempKaryawan->nama
-                    << "|" << endl;
-                tempKaryawan = tempKaryawan->next;
-            }
-        } else {
-            cout << "| " << setw(20) << ""
-                 << "| " << setw(30) << ""
-                 << "|" << endl;
-        }
-         cout << string(80, '-') << endl;
+             << setw(4)  << (to_string(no++) + ".")
+             << setw(10) << Q.info[idx].NIP
+             << setw(20) << Q.info[idx].nama
+             << setw(5)  << Q.info[idx].gol
+             << setw(14) << formatRibuan(hitungGaji(Q.info[idx].gol))
+             << setw(14) << formatRibuan(hitungTunjangan(Q.info[idx].gol))
+             << setw(14) << formatRibuan(hitungTotal(Q.info[idx].gol))
+             << endl;
+        if (idx < MAKS - 1)
+            idx++;
+        else
+            idx = 0;
+        count++;
     }
-}
 
-void deleteDivisi(PointerDivisi& Div) {
-    while(!isEmptyKaryawan(Div->karyawan)) {
-        PointerKaryawan tempKaryawan;
-        deleteFirstKaryawan(Div, tempKaryawan);
-        delete tempKaryawan;
+    cout << string(80, '-') << endl;
+    cout << left
+         << setw(39) << "Jumlah"
+         << setw(14) << formatRibuan(hitungTotalGaji(Q))
+         << setw(14) << formatRibuan(hitungTotalTunjangan(Q))
+         << setw(14) << formatRibuan(hitungTotalKeseluruhan(Q))
+         << endl;
+    cout << string(80, '-') << endl;
+    cout << "Rata-rata Gaji Total : " << fixed << setprecision(0)
+         << formatRibuan((long long)hitungRataRata(Q)) << endl;
+    cout << string(80, '-') << endl;
     }
 }
 
 void menu() {
     cout << "\n==========================================" << endl;
-    cout << "           MENU MULTI LIST PERUSAHAAN       " << endl;
-    cout << "============================================" << endl;
-    cout << "  1. Insert First Karyawan " << endl;
-    cout << "  2. Delete First Karyawan " << endl;
-    cout << "  3. Insert First Divisi " << endl;
-    cout << "  4. Delete First Divisi " << endl;
-    cout << "  5. Tampilkan Semua" << endl;
-    cout << "  6. Tampilkan Divisi" << endl;
+    cout << "   MENU QUEUE PEGAWAI (Array Circular)" << endl;
+    cout << "==========================================" << endl;
+    cout << "  1. InsertQueue (Tambah Pegawai)" << endl;
+    cout << "  2. DeleteQueue (Hapus Pegawai Terdepan)" << endl;
+    cout << "  3. Traversal   (Tampilkan Semua)" << endl;
     cout << "  0. Keluar" << endl;
-    cout << "--------------------------------------------" << endl;
+    cout << "------------------------------------------" << endl;
     cout << "  Pilihan: ";
 }
 
 int main() {
-    List DivisiPT;
-    createList(DivisiPT);
+    QueueArray PegawaiInfor;
+    createQueue(PegawaiInfor);
 
+    Pegawai newElement, delElement;
     int pilihan;
 
     do {
@@ -240,107 +270,37 @@ int main() {
 
         switch (pilihan) {
             case 1: {
-                PointerKaryawan pBaru;
-                string namaDivisi;
-                if (isEmptyDivisi(DivisiPT)) {
-                    cout << "Belum ada divisi. Silakan buat divisi terlebih dahulu." << endl;
+                bool berhasil;
+                cout << "\n--- Input Pegawai Baru ---" << endl;
+                inputPegawai(newElement);
+                insertQueue(PegawaiInfor, newElement, berhasil);
+                if (berhasil) {
+                    cout << "Pegawai berhasil di-insert." << endl;
                 } else {
-                    cout << "Masukkan nama divisi untuk menambahkan karyawan: ";
-                    cin.ignore(40000, '\n'); getline(cin, namaDivisi);
-                    PointerDivisi hasil;
-                    bool found;
-                    linearSearchDivisi(DivisiPT, namaDivisi, hasil, found);
-                    if (found) {
-                        cout << "\n--- Input Karyawan Baru ---" << endl;
-                        createKaryawan(pBaru);
-                        insertFirstKaryawan(hasil, pBaru);
-                        cout << "Karyawan berhasil di-insert." << endl;
-                    } else {
-                        cout << "Divisi tidak ditemukan." << endl;
-                    }
+                    cout << "Gagal menginsert pegawai." << endl;
                 }
                 break;
             }
             case 2: {
-                PointerKaryawan pHapus;
-                string namaDivisi;
-                if (isEmptyDivisi(DivisiPT)) {
-                    cout << "Belum ada divisi. Silakan buat divisi terlebih dahulu." << endl;
+                bool kosong;
+                deleteQueue(PegawaiInfor, delElement, kosong);
+                if (!kosong) {
+                    cout << "\nPegawai \"" << delElement.nama << "\" berhasil di-delete." << endl;
                 } else {
-                    cout << "Masukkan nama divisi untuk menghapus karyawan: ";
-                    cin.ignore(40000, '\n'); getline(cin, namaDivisi);
-                    PointerDivisi hasil;
-                    bool found;
-                    linearSearchDivisi(DivisiPT, namaDivisi, hasil, found);
-                    if (found) {
-                        deleteFirstKaryawan(hasil, pHapus);
-                        if (pHapus != nullptr) {
-                            cout << "\nKaryawan \"" << pHapus->nama << "\" berhasil di-delete." << endl;
-                            delete pHapus; 
-                        }
-                    } else {
-                        cout << "Divisi tidak ditemukan." << endl;
-                    }
+                    cout << "Queue kosong." << endl;
                 }
                 break;
             }
-            case 3: {
-                PointerDivisi pBaru;
-                cout << "\n--- Input Divisi Baru ---" << endl;
-                createDivisi(pBaru);
-                insertFirstDivisi(DivisiPT, pBaru);
-                cout << "Divisi berhasil di-insert." << endl;
+            case 3:
+                traversal(PegawaiInfor);
                 break;
-            }
-            case 4: {
-                PointerDivisi pHapus;
-                deleteFirstDivisi(DivisiPT, pHapus);
-                if (pHapus != nullptr) {
-                    deleteDivisi(pHapus);
-                    cout << "\nDivisi \"" << pHapus->namaDivisi << "\" berhasil di-delete." << endl;
-                    delete pHapus; 
-                }
-                break;
-            }
-            case 5:
-                traversalSemua(DivisiPT);
-                break;
-            case 6: {
-                string namaDivisi;
-                if (isEmptyDivisi(DivisiPT)) {
-                    cout << "Belum ada divisi. Silakan buat divisi terlebih dahulu." << endl;
-                } else {
-                    cout << "Masukkan nama divisi untuk menampilkan karyawan: ";
-                    cin.ignore(40000, '\n'); getline(cin, namaDivisi);
-                    PointerDivisi hasil;
-                    bool found;
-                    linearSearchDivisi(DivisiPT, namaDivisi, hasil, found);
-                    if (found) {
-                        traversalDivisi(hasil);
-                    } else {
-                        cout << "Divisi tidak ditemukan." << endl;
-                    }
-                }
-                break;
-            }
-            case 0: 
+            case 0:
                 cout << "\nProgram Selesai." << endl;
-                while (!isEmptyDivisi(DivisiPT)) {
-                    deleteDivisi(DivisiPT);
-                    PointerDivisi temp = DivisiPT;
-                    if (DivisiPT->next != nullptr) {
-                        DivisiPT = DivisiPT->next;
-                    } else {
-                        DivisiPT = nullptr;
-                    }
-                    delete temp;
-                }
                 break;
             default:
-                cin.clear();
-                cin.ignore(40000, '\n');
                 cout << "\nPilihan tidak valid!" << endl;
         }
+
     } while (pilihan != 0);
 
     return 0;
