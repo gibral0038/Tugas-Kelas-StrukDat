@@ -125,30 +125,30 @@ void traversal(Queue Q) {
     }
     else {
         cout << "\n";
-        cout << string(70, '-') << endl;
+        cout << string(73, '-') << endl;
         cout << setw(42) << " DAFTAR PASIEN IGD " << endl;
-        cout << string(70, '-') << endl;
+        cout << string(73, '-') << endl;
         cout << left
-            << setw(4)  << "No"
-            << setw(20) << "ID Pasien"
-            << setw(30) << "Nama"
-            << setw(9) << "Prioritas"
-            << endl;
-        cout << string(70, '-') << endl;
+             << "| " << setw(4)  << "No"
+             << "| " << setw(20) << "ID Pasien"
+             << "| " << setw(30) << "Nama"
+             << "| " << setw(10) << "Prioritas"
+             << "|" << endl;
+        cout << string(73, '-') << endl;
 
         int count = 0;
         Pointer temp = Q.head;
         while (temp != nullptr) {
             cout << left
-                << setw(4)  << count + 1
-                << setw(20) << temp->info.IDPasien
-                << setw(30) << temp->info.nama
-                << setw(4)  << temp->Priority
-                << endl;
+                 << "| " << setw(4)  << count + 1
+                 << "| " << setw(20) << temp->info.IDPasien
+                 << "| " << setw(30) << temp->info.nama
+                 << "| " << setw(10)  << temp->Priority
+                 << "|" << endl;
             temp = temp->next;
             count++;
         }
-        cout << string(70, '-') << endl;
+        cout << string(73, '-') << endl;
     }
 }
 
