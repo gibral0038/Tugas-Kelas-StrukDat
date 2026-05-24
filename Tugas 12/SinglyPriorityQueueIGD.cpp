@@ -1,4 +1,4 @@
-/*  Nama program    : Modifikasi Pointer dan Refereces
+/*  Nama program    : SinglyPriorityQueueIGD
     Nama Anggota    : Renadi Wilantara, Gibraldi Zilal Fachry, Muhammad Yunus Habiby, Azrel Sakhi Reswara
     NPM             : 140810240061, 140810250038, 140810250014, 140810250098
     Tanggal buat    : 20 Mei 2026
