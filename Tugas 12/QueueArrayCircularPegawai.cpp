@@ -162,7 +162,6 @@ void traversalSemua(List Div) {
         }
         cout << string(80, '-') << endl;
     }
-
 }
 
 void traversalDivisi(PointerDivisi Div) {
