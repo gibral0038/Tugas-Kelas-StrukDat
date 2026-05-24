@@ -301,7 +301,6 @@ int main() {
             default:
                 cout << "\nPilihan tidak valid!" << endl;
         }
-
     } while (pilihan != 0);
 
     return 0;
