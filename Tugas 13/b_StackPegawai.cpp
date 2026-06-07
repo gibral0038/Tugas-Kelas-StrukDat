@@ -1,4 +1,4 @@
-/*  Nama program    : 1_StackPegawai
+/*  Nama program    : b_StackPegawai
     Nama Kelompok   : - Renadi Wilantara (140810240061)
                       - Muhammad Yunus Habiby (140810250014)
                       - Gibraldi Zilal Fachry (140810250038)
