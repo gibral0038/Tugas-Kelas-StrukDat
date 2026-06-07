@@ -19,6 +19,16 @@ struct Pegawai{
     int gol;
 };
 
+string formatRibuan(long long n) {
+    string s = to_string(n);
+    int insert = s.length() - 3;
+    while (insert > 0) {
+        s.insert(insert, ".");
+        insert -= 3;
+    }
+    return s;
+}
+
 int validInputInteger(int jenis){
     int n;
     bool valid = true;
@@ -106,9 +116,9 @@ void cetakStack(stack<Pegawai> daftar){
                 << setw(8) << daftar.top().NIP
                 << setw(20) << daftar.top().nama
                 << setw(4) << daftar.top().gol
-                << setw(14) << gaji(daftar.top().gol)
-                << setw(14) << tunjangan(daftar.top().gol)
-                << setw(16) << total(daftar.top().gol) << "\n";
+                << setw(14) << formatRibuan(gaji(daftar.top().gol))
+                << setw(14) << formatRibuan(tunjangan(daftar.top().gol))
+                << setw(16) << formatRibuan(total(daftar.top().gol)) << "\n";
             totalGaji += gaji(daftar.top().gol);
             totalTunjangan += tunjangan(daftar.top().gol);
             totalGabungan += total(daftar.top().gol);
@@ -116,11 +126,11 @@ void cetakStack(stack<Pegawai> daftar){
         } while (!daftar.empty()); 
         cout << "-----------------------------------------------------------------------------\n";
         cout << left << setw(36) << "Jumlah : " 
-            << setw(14) << totalGaji
-            << setw(14) << totalTunjangan
-            << setw(16) << totalGabungan;
+            << setw(14) << formatRibuan(totalGaji)
+            << setw(14) << formatRibuan(totalTunjangan)
+            << setw(16) << formatRibuan(totalGabungan);
         cout << "\n-----------------------------------------------------------------------------\n";
-        cout << "Rata rata total gaji : " << totalGabungan / count << endl;
+        cout << "Rata rata total gaji : " << formatRibuan(totalGabungan / count) << endl;
     }
 }
 void display(){
