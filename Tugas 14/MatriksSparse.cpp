@@ -1,6 +1,6 @@
 /*  Nama program    : MatriksSparse
-    Nama            : Gibraldi Zilal Fachry
-    NPM             : 140810250038
+    Nama Anggota    : Renadi Wilantara, Gibraldi Zilal Fachry, Muhammad Yunus Habiby, Azrel Sakhi Reswara
+    NPM             : 140810240061, 140810250038, 140810250014, 140810250098
     Tanggal buat    : 02 Juni 2026
     Deskripsi       : MatriksSparse
 ******************************************************/
