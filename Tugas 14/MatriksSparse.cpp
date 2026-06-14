@@ -313,30 +313,34 @@ int main() {
             case 2:
                 if (!isFill) {
                     cout << "Silakan input ukuran matriks terlebih dahulu (Menu 1)!" << endl;
-                    break;
+                } else {
+                    inputMatrixAll(Matriks, 2);
+                    isValued = true;
                 }
-                inputMatrixAll(Matriks, 2);
-                isValued = true;
                 break;
             case 3:
                 if (!isFill || !isValued) {
                     cout << "Silakan input ukuran dan isi matriks terlebih dahulu (Menu 1 dan 2)!" << endl;
-                    break;
+                } else {
+                    printMatrixAll(Matriks, 2);
                 }
-                printMatrixAll(Matriks, 2);
                 break;
             case 4: {
                 bool isValid;
-                addMatrices(Matriks[0], Matriks[1], Hasil, isValid);
-                if (isValid) {
-                    cout << "Hasil penjumlahan : " << endl;
-                    printMatrixFormatGrid(Hasil);
+                if (!isFill || !isValued) {
+                    cout << "Silakan input ukuran dan isi matriks terlebih dahulu (Menu 1 dan 2)!" << endl;
                 } else {
-                    cout << "Matriks tidak dapat dijumlahkan!" << endl;
+                    addMatrices(Matriks[0], Matriks[1], Hasil, isValid);
+                    if (isValid) {
+                        cout << "Hasil penjumlahan : " << endl;
+                        printMatrixFormatGrid(Hasil);
+                    } else {
+                        cout << "Matriks tidak dapat dijumlahkan!" << endl;
+                    }
                 }
                 break;
             }
-            case 5:
+            case 5: 
                 cout << "Terima kasih telah menggunakan program ini!" << endl;
                 break;
             default:
