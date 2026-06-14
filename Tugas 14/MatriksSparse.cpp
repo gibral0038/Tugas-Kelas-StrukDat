@@ -140,8 +140,9 @@ void inputMatrix(SparseMatrix& M, int id) {
     for (int i = 0; i < nonZeroCount; i++) {
         int r, c, val;
         cout << "Data ke-" << i + 1 << " (Baris Kolom Nilai): ";
-        cin >> r >> c >> val;
-
+        cout << "Baris: "; cin >> r;
+        cout << "Kolom: "; cin >> c;
+        cout << "Nilai: "; cin >> val;
         
         if (r >= M.totalRows || c >= M.totalCols || r < 0 || c < 0) {
             cout << "Koordinat di luar jangkauan matriks! Silakan ulangi." << endl;
